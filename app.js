@@ -54,9 +54,9 @@ app.get("/todos/", async (request, response) => {
               FROM 
                 todo
               WHERE 
-                todo LIKE %${search_q}%
-                AND status = ${status}
-                AND priority = ${priority};`;
+                todo LIKE '%${search_q}%'
+                AND status = '${status}'
+                AND priority = '${priority}';`;
       break;
     case hasPriorityLProperties(request.query):
       getTodosQuery = `
@@ -65,8 +65,8 @@ app.get("/todos/", async (request, response) => {
               FROM 
                 todo 
               WHERE 
-                todo LIKE %${search_q}%
-                AND priority = ${priority};`;
+                todo LIKE '%${search_q}%'
+                AND priority = '${priority}';`;
       break;
     case hasStatusProperties(request.query):
       getTodosQuery = `
@@ -75,8 +75,8 @@ app.get("/todos/", async (request, response) => {
               FROM 
                 todo 
               WHERE 
-                todo LIKE %${search_q}%
-                AND status = ${status};`;
+                todo LIKE '%${search_q}%'
+                AND status = '${status}';`;
       break;
     default:
       getTodosQuery = `
@@ -85,7 +85,7 @@ app.get("/todos/", async (request, response) => {
               FROM 
                 todo 
               WHERE 
-                todo LIKE %${search_q}%;`;
+                todo LIKE '%${search_q}%';`;
   }
 
   data = await database.all(getTodosQuery);
@@ -118,7 +118,7 @@ app.post("/todos/", async (request, response) => {
       INSERT INTO 
         todo ( id, todo, priority, status )
       VALUES 
-        ( ${id}, ${todo}, ${priority}, ${status} );`;
+        ( ${id}, '${todo}', '${priority}', '${status}');`;
   await database.run(postTodoQuery);
   response.send("Todo Successfully Added");
 });
@@ -161,9 +161,9 @@ app.put("/todos/:todoId/", async (request, response) => {
     UPDATE 
       todo 
     SET 
-      todo = ${todo},
-      priority = ${priority},
-      status = ${status}
+      todo = '${todo}',
+      priority = '${priority}',
+      status = '${status}'
     WHERE 
       id = ${todoId};`;
   await database.run(updateTodoQuery);
