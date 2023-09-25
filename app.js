@@ -45,6 +45,7 @@ const hasStatusProperties = (requestQuery) => {
 app.get("/todos/", async (request, response) => {
   let data = null;
   let getTodosQuery = "";
+  const { search_q = "", priority, status } = request.query;
 
   switch (true) {
     case hasPriorityAndStatusProperties(request.query):
@@ -127,7 +128,7 @@ app.post("/todos/", async (request, response) => {
 
 app.put("/todos/:todoId/", async (request, response) => {
   const { todoId } = request.params;
-  const updateColumn = "";
+  let updateColumn = "";
   const requestBody = request.body;
 
   switch (true) {
@@ -167,7 +168,7 @@ app.put("/todos/:todoId/", async (request, response) => {
     WHERE 
       id = ${todoId};`;
   await database.run(updateTodoQuery);
-  response.send(`${updateColumn} updated`);
+  response.send(`${updateColumn} Updated`);
 });
 
 app.delete("/todos/:todoId/", async (request, response) => {
